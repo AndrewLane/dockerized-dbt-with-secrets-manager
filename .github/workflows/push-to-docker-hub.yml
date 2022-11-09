@@ -3,6 +3,9 @@ on:
     branches: [main]
   workflow_dispatch:
 
+env:
+  IMAGE_NAME: andrewwlane/dockerized-dbt
+
 jobs:
   push_to_registry:
     name: Push Docker image to Docker Hub
@@ -22,4 +25,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: andrewwlane/dockerized-dbt:latest,andrewwlane/dockerized-dbt:${{ env.GITHUB_RUN_NUMBER }}
+          tags: $IMAGE_NAME:latest,$IMAGE_NAME:${GITHUB_RUN_NUMBER}
