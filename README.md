@@ -110,3 +110,7 @@ DBT_WAREHOUSE=warehouse_here
 | my_first_dbt_model  | starting model deployment | 2022-11-16 11:30:15.090 -0800 |
 +---------------------+---------------------------+-------------------------------+
 ```
+
+## See also
+
+https://github.com/AndrewLane/dbt-fargate-poc
