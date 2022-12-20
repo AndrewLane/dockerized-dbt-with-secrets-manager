@@ -22,4 +22,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: andrewwlane/dockerized-dbt:latest
+          tags: andrewwlane/dockerized-dbt-with-secrets-manager:latest

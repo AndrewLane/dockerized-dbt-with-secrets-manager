@@ -2,7 +2,9 @@ FROM python:3.8.15-slim
 
 RUN pip install dbt-snowflake==1.3.0
 
-COPY config/profiles.dist.yml /root/.dbt/profiles.yml
+RUN pip install awscli
+
+RUN apt update && apt install jq git -y
 
 WORKDIR /dbt
 
