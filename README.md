@@ -32,7 +32,33 @@ In addition, the invocation expects a single command-line parameter (either `deb
 ```
 
 ```
-
+Looking up secret xxxxx for the profiles.yml configuration...
+Finished writing profiles.yml.
+Looking up secret xxxxx for the private key data...
+Finished lookup of private key and writing it to disk.
+Kicking off dbt run...
+20:36:52  Running with dbt=1.3.1
+20:36:52  Partial parse save file not found. Starting full parse.
+20:36:54  Found 2 models, 4 tests, 0 snapshots, 0 analyses, 303 macros, 1 operation, 0 seed files, 0 sources, 0 exposures, 0 metrics
+20:36:54
+20:36:57
+20:36:57  Running 1 on-run-start hook
+20:36:57  1 of 1 START hook: dockerized_dbt.on-run-start.0 ............................... [RUN]
+20:36:57  1 of 1 OK hook: dockerized_dbt.on-run-start.0 .................................. [SUCCESS 1 in 0.70s]
+20:36:57
+20:36:58  Concurrency: 1 threads (target='dev')
+20:36:58
+20:36:58  1 of 2 START sql table model secretsmanagertest.my_first_dbt_model ............. [RUN]
+20:37:00  1 of 2 OK created sql table model secretsmanagertest.my_first_dbt_model ........ [SUCCESS 1 in 2.64s]
+20:37:00  2 of 2 START sql view model secretsmanagertest.my_second_dbt_model ............. [RUN]
+20:37:02  2 of 2 OK created sql view model secretsmanagertest.my_second_dbt_model ........ [SUCCESS 1 in 2.04s]
+20:37:02  
+20:37:02  Finished running 1 table model, 1 view model, 1 hook in 0 hours 0 minutes and 8.65 seconds (8.65s).
+20:37:02  
+20:37:02  Completed successfully
+20:37:02  
+20:37:02  Done. PASS=2 WARN=0 ERROR=0 SKIP=0 TOTAL=2
+Done...
 ```
 
 **dbt test**
@@ -41,7 +67,37 @@ In addition, the invocation expects a single command-line parameter (either `deb
 ```
 
 ```
-
+Looking up secret xxxxx for the profiles.yml configuration...
+Finished writing profiles.yml.
+Looking up secret xxxxx for the private key data...
+Finished lookup of private key and writing it to disk.
+Kicking off dbt test...
+20:38:22  Running with dbt=1.3.1
+20:38:22  Partial parse save file not found. Starting full parse.
+20:38:23  Found 2 models, 4 tests, 0 snapshots, 0 analyses, 303 macros, 1 operation, 0 seed files, 0 sources, 0 exposures, 0 metrics
+20:38:23  
+20:38:25  
+20:38:25  Running 1 on-run-start hook
+20:38:25  1 of 1 START hook: dockerized_dbt.on-run-start.0 ............................... [RUN]
+20:38:26  1 of 1 OK hook: dockerized_dbt.on-run-start.0 .................................. [SUCCESS 1 in 0.66s]
+20:38:26  
+20:38:26  Concurrency: 1 threads (target='dev')
+20:38:26  
+20:38:26  1 of 4 START test not_null_my_first_dbt_model_id ............................... [RUN]
+20:38:27  1 of 4 PASS not_null_my_first_dbt_model_id ..................................... [PASS in 1.28s]
+20:38:27  2 of 4 START test not_null_my_second_dbt_model_id .............................. [RUN]
+20:38:28  2 of 4 PASS not_null_my_second_dbt_model_id .................................... [PASS in 1.17s]
+20:38:28  3 of 4 START test unique_my_first_dbt_model_id ................................. [RUN]
+20:38:30  3 of 4 PASS unique_my_first_dbt_model_id ....................................... [PASS in 1.35s]
+20:38:30  4 of 4 START test unique_my_second_dbt_model_id ................................ [RUN]
+20:38:31  4 of 4 PASS unique_my_second_dbt_model_id ...................................... [PASS in 1.06s]
+20:38:31  
+20:38:31  Finished running 4 tests, 1 hook in 0 hours 0 minutes and 7.55 seconds (7.55s).
+20:38:31  
+20:38:31  Completed successfully
+20:38:31
+20:38:31  Done. PASS=4 WARN=0 ERROR=0 SKIP=0 TOTAL=4
+Done...
 ```
 
 ## Example contents of .env file:
@@ -54,7 +110,7 @@ DBT_PROFILES_YML_SECRET_NAME=dev/snowflake/dbt/profiles_yml
 DBT_PRIVATE_KEY_SECRET_NAME=dev/snowflake/dbt/private_key
 ```
 
-## Example plaintext content of secret pointed by DBT_PROFILES_YML_SECRET_NAME above
+## Example plaintext content of secret pointed to by DBT_PROFILES_YML_SECRET_NAME above:
 
 ```
 config:
@@ -82,9 +138,16 @@ dockerized_dbt:
 ```
 >select * from audit order by time desc limit 2;
 
+
++---------------------+---------------------------+-------------------------------+
+|        MODEL        |           STATE           |             TIME              |
++---------------------+---------------------------+-------------------------------+
+| my_second_dbt_model | starting model deployment | 2022-12-20T12:37:01.613-08:00 |
+| my_first_dbt_model  | starting model deployment | 2022-12-20T12:36:58.751-08:00 |
++---------------------+---------------------------+-------------------------------+
 ```
 
 ## See also
 
-https://github.com/AndrewLane/dbt-fargate-poc
-https://github.com/AndrewLane/dockerized-dbt
+* https://github.com/AndrewLane/dbt-fargate-poc
+* https://github.com/AndrewLane/dockerized-dbt
